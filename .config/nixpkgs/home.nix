@@ -22,8 +22,6 @@ in {
      pkgs.docker
      pkgs.powerline-fonts
      pkgs.jq
-     pkgs.starship
-     pkgs.fzf
      pkgs.ripgrep
   ];
 
@@ -57,8 +55,24 @@ in {
     enable = true;
   };
 
+  programs.bash = {
+    enable = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = false;
+  };
+  
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
+  };
+
   home.file.".vimrc".source = ./configs/.vimrc;
-  home.file.".bashrc".source = ./configs/.bashrc;
-  home.file.".fzf.bash".source = ./configs/.fzf.bash;
-  home.file.".fzf/shell/key-bindings.bash".source = ./configs/.fzf/shell/key-bindings.bash;
+  #home.file.".bashrc".source = ./configs/.bashrc;
+  #home.file.".fzf.bash".source = ./configs/.fzf.bash;
+  #home.file.".fzf/shell/key-bindings.bash".source = ./configs/.fzf/shell/key-bindings.bash;
 }
