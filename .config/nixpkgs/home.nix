@@ -1,27 +1,22 @@
 { config, pkgs, ... }:
 {
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "19.09";
+  home.stateVersion = "20.03";
 
   home.packages = [
-     pkgs.buildah
-     pkgs.docker
-     pkgs.git
-     pkgs.htop
-     pkgs.jq
-     pkgs.linuxPackages.perf
-     pkgs.powerline-fonts
-     pkgs.ripgrep
-     pkgs.strace
-     pkgs.vim
-     pkgs.i3blocks
+     pkgs.buildah            # builds OCI containers
+     pkgs.docker             # runs OCI containers
+     pkgs.docker-compose     # start collections of docker containers
+     pkgs.git                # versions source code
+     pkgs.htop               # shows what resources applications use
+     pkgs.i3blocks           # status bar for i3
+     pkgs.iftop              # shows active network connections
+     pkgs.jq                 # like sed for json
+     pkgs.linuxPackages.perf # performance monitor applications
+     pkgs.nload              # show network transfer load
+     pkgs.powerline-fonts    # we like fonts
+     pkgs.ripgrep            # like grep, but better
+     pkgs.strace             # trace what applications do
+     pkgs.vim                # edit the shit out of files
   ];
 
   xsession = {
@@ -68,6 +63,9 @@
 
   programs.bash = {
     enable = true;
+    bashrcExtra = ''
+      export PATH=$HOME/.local/bin:$PATH
+    '';
   };
 
   programs.fzf = {
