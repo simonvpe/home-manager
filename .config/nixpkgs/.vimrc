@@ -26,6 +26,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'twinside/vim-hoogle'
   Plug 'vim-airline/vim-airline'
+  Plug 'LnL7/vim-nix'
 call plug#end()
 
 colors railscasts

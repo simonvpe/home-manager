@@ -1,0 +1,16 @@
+# https://github.com/LukeSmithxyz/voidrice
+separator_block_width=15
+markup=pango
+
+[wifi]
+command=$HOME/.local/bin/statusbar/wifi wlp59s0
+interval=5
+
+[battery]
+command=$HOME/.local/bin/statusbar/battery BAT0
+interval=5
+
+[date]
+command=date
+interval=1
+

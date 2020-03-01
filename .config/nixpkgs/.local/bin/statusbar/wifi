@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+readonly signal=$(grep $1 /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+readonly ssid=$(iwgetid | grep $1 | cut -d: -f2 | sed 's/"//g')
+readonly white="#FFFFFF"
+readonly orange="#FFA500"
+readonly orangered="#FF4500"
+readonly symbol=
+
+[[ ! -d /sys/class/net/$1/wireless ]] && exit
+
+# If the wifi interface exists but no connection is active, "down" shall be displayed.
+case "$(cat /sys/class/net/$1/operstate)" in
+    up)
+	if [[ $signal -ge 75 ]]; then
+	    printf '<span color="%s">%s %s</span>\n' "$white" "$symbol" "$ssid"
+	elif [[ $signal -ge 50 ]]; then
+	    printf '<span color="%s">%s %s</span>\n' "$orange" "$symbol" "$ssid"
+	else
+	    printf '<span color="%s">%s %s</span>\n' "$orangered" "$symbol" "$ssid"
+	fi
+	;;
+    
+    down)
+	printf '<span color="%s">%s</span>\n' "#333333" "$symbol"
+	;;
+esac

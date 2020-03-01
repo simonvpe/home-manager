@@ -1,10 +1,5 @@
 { config, pkgs, ... }:
-
-let
-  xmonad = pkgs.xmonad-with-packages.override {
-    packages = self: [ self.xmonad-contrib self.xmonad-extras self.xmobar ];
-  };
-in {
+{
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new Home Manager release introduces backwards
@@ -16,23 +11,39 @@ in {
   home.stateVersion = "19.09";
 
   home.packages = [
-     pkgs.git
-     pkgs.htop
      pkgs.buildah
      pkgs.docker
-     pkgs.powerline-fonts
+     pkgs.git
+     pkgs.htop
      pkgs.jq
+     pkgs.linuxPackages.perf
+     pkgs.powerline-fonts
      pkgs.ripgrep
+     pkgs.strace
+     pkgs.vim
+     pkgs.i3blocks
   ];
 
   xsession = {
     enable = true;
-    windowManager.command = "${xmonad}/bin/xmonad";
+    windowManager = {
+      i3.enable = true;
+      i3.package = pkgs.i3-gaps;
+      i3.config = null;
+      i3.extraConfig = builtins.readFile .config/i3/config;
+    };
   };
 
   programs.firefox = {
     enable = true;
     enableIcedTea = true;
+    # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json
+    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      bitwarden
+      octotree
+      privacy-badger
+      vim-vixen
+    ];
   };
 
   services.gpg-agent = {
@@ -45,14 +56,14 @@ in {
     enable = true;
   };
 
+  programs.alacritty = {
+    enable = true;
+  };
+
   programs.git = {
     enable = true;
     userName = "Simon Pettersson";
     userEmail = "simon.v.pettersson@gmail.com";
-  };
-
-  programs.vim = {
-    enable = true;
   };
 
   programs.bash = {
@@ -64,15 +75,15 @@ in {
     enableBashIntegration = true;
     enableZshIntegration = false;
   };
-  
+
   programs.starship = {
     enable = true;
     enableZshIntegration = false;
     enableFishIntegration = false;
   };
 
-  home.file.".vimrc".source = ./configs/.vimrc;
-  #home.file.".bashrc".source = ./configs/.bashrc;
-  #home.file.".fzf.bash".source = ./configs/.fzf.bash;
-  #home.file.".fzf/shell/key-bindings.bash".source = ./configs/.fzf/shell/key-bindings.bash;
+  home.file.".vimrc".source = ./.vimrc;
+  home.file.".local/bin/statusbar/battery".source = .local/bin/statusbar/battery;
+  home.file.".local/bin/statusbar/wifi".source = .local/bin/statusbar/wifi;
+  home.file.".config/i3blocks/config".source = .config/i3blocks/config;
 }
