@@ -1,0 +1,5 @@
+/*
+!/.config
+/.config/*
+!/.config/nixpkgs
+!/.gitignore
