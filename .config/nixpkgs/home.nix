@@ -1,13 +1,13 @@
 { config, pkgs, ... }:
 
 let machine = import ./machine.nix;
+    all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in {
   home.stateVersion = "20.03";
 
   imports = [ ./machine.nix ];
 
   home.packages = with pkgs; [
-     htop               # shows what resources applications use
      i3blocks           # status bar for i3
      iftop              # shows active network connections
      jq                 # like sed for json
@@ -16,6 +16,7 @@ in {
      powerline-fonts    # we like fonts
      ripgrep            # like grep, but better
      strace             # trace what applications do
+     (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 
   xsession = {
@@ -26,6 +27,10 @@ in {
       i3.config = null;
       i3.extraConfig = builtins.readFile .config/i3/config;
     };
+  };
+
+  programs.htop = {
+    enable = true;
   };
 
   programs.firefox = {
@@ -88,9 +93,15 @@ in {
     viAlias = true;
     vimAlias = true;
     withPython3 = true;
+    extraPython3Packages = (ps: with ps; [
+      python-language-server
+      pep8
+    ]);
+    withNodeJs = true;
     plugins = with pkgs.vimPlugins; [
-      ale                       # Asynchronous Lint Engine
+      #ale                       # Asynchronous Lint Engine
       awesome-vim-colorschemes
+      coc-nvim
       fzf-vim                   # A command-line fuzzy finder
       indentLine                # A vim plugin to display the indention levels with thin vertical lines
       rainbow_parentheses       # Simpler Rainbow Parentheses
@@ -144,5 +155,9 @@ in {
     enable = true;
     theme = "c64";
     terminal = "$HOME/.local/bin/terminal";
+  };
+
+  programs.zathura = {
+    enable = true;
   };
 }
