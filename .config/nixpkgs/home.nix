@@ -51,13 +51,21 @@ in {
     enable = true;
   };
 
-  programs.alacritty = {
+  programs.termite = {
     enable = true;
   };
 
   programs.bash = {
     enable = true;
-  };
+    initExtra = ''
+      # use bat as man pager for some colors
+      export MANPAGER="sh -c 'col -b | bat -l man -p'"
+    '';
+    shellAliases = {
+      "cat" = "bat";
+      ".."  = "cd ..";
+    };
+ };
 
   programs.fzf = {
     enable = true;
@@ -71,6 +79,10 @@ in {
     enableFishIntegration = false;
   };
 
+  # bat, a cat clone with wings
+  programs.bat = {
+    enable = true;
+  };
+
   home.file.".vimrc".source = ./.vimrc;
-  home.file.".config/i3blocks/config".source = .config/i3blocks/config;
 }

@@ -42,7 +42,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $HOME/.local/bin/terminal
 
 # kill focused window
 bindsym $mod+Shift+apostrophe kill

@@ -40,6 +40,8 @@
       . /opt/rh/rh-git29/enable
       . /opt/rh/rh-python36/enable
     '';
-  };
+ };
 
+ home.file.".config/i3blocks/config".source = ./.config/i3blocks/work;
+ home.file.".local/bin/terminal".source = ./.local/bin/terminal.work;
 }

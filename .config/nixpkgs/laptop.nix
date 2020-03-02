@@ -18,6 +18,12 @@
     '';
   };
 
+  programs.alacritty = {
+    enable = true;
+  };
+
   home.file.".local/bin/statusbar/battery".source = .local/bin/statusbar/battery;
   home.file.".local/bin/statusbar/wifi".source = .local/bin/statusbar/wifi;
+  home.file.".config/i3blocks/config".source = .config/i3blocks/laptop;
+  home.file.".local/bin/terminal".source = ./.local/bin/terminal.laptop;
 }
