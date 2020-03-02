@@ -16,6 +16,7 @@ in {
      powerline-fonts    # we like fonts
      ripgrep            # like grep, but better
      strace             # trace what applications do
+     googler            # Googles in the console
      (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 
@@ -68,6 +69,7 @@ in {
     shellAliases = {
       "cat" = "bat";
       ".."  = "cd ..";
+      "google" = "googler";
     };
  };
 
@@ -95,6 +97,7 @@ in {
     withPython3 = true;
     extraPython3Packages = (ps: with ps; [
       python-language-server
+      pylint
       pep8
     ]);
     withNodeJs = true;
@@ -102,6 +105,11 @@ in {
       #ale                       # Asynchronous Lint Engine
       awesome-vim-colorschemes
       coc-nvim
+      coc-json
+      coc-prettier
+      coc-python
+      coc-yaml
+
       fzf-vim                   # A command-line fuzzy finder
       indentLine                # A vim plugin to display the indention levels with thin vertical lines
       rainbow_parentheses       # Simpler Rainbow Parentheses
