@@ -17,6 +17,7 @@ in {
      ripgrep            # like grep, but better
      strace             # trace what applications do
      googler            # Googles in the console
+     up                 # A tool for writing Linux pipes with instant live preview
      (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 
