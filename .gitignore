@@ -3,3 +3,4 @@
 /.config/*
 !/.config/nixpkgs
 !/.gitignore
+/.config/nixpkgs/machine.nix

@@ -1,22 +1,22 @@
 { config, pkgs, ... }:
-{
+
+let machine = import ./machine.nix;
+in {
   home.stateVersion = "20.03";
 
-  home.packages = [
-     pkgs.buildah            # builds OCI containers
-     pkgs.docker             # runs OCI containers
-     pkgs.docker-compose     # start collections of docker containers
-     pkgs.git                # versions source code
-     pkgs.htop               # shows what resources applications use
-     pkgs.i3blocks           # status bar for i3
-     pkgs.iftop              # shows active network connections
-     pkgs.jq                 # like sed for json
-     pkgs.linuxPackages.perf # performance monitor applications
-     pkgs.nload              # show network transfer load
-     pkgs.powerline-fonts    # we like fonts
-     pkgs.ripgrep            # like grep, but better
-     pkgs.strace             # trace what applications do
-     pkgs.vim                # edit the shit out of files
+  imports = [ ./machine.nix ];
+
+  home.packages = with pkgs; [
+     htop               # shows what resources applications use
+     i3blocks           # status bar for i3
+     iftop              # shows active network connections
+     jq                 # like sed for json
+     linuxPackages.perf # performance monitor applications
+     nload              # show network transfer load
+     powerline-fonts    # we like fonts
+     ripgrep            # like grep, but better
+     strace             # trace what applications do
+     vim                # edit the shit out of files
   ];
 
   xsession = {
