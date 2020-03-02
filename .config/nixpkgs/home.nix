@@ -89,24 +89,26 @@ in {
     vimAlias = true;
     withPython3 = true;
     plugins = with pkgs.vimPlugins; [
-      ale                    # Asynchronous Lint Engine
-      fzf-vim                # A command-line fuzzy finder
-      indentLine             # A vim plugin to display the indention levels with thin vertical lines
-      rainbow_parentheses    # Simpler Rainbow Parentheses
-      semshi                 # Semantic Highlighting for Python in Neovim
-      vim-airline            # lean & mean status/tabline for vim that's light as air
-      vim-better-whitespace  # Better whitespace highlighting for Vim
-      vim-commentary         # Comment stuff out
-      vim-eunuch             # Helpers for UNIX
-      vim-fugitive           # A Git wrapper so awesome, it should be illegal
-      vim-hoogle             # Vim plugin used to query hoogle
-      vim-nix                # Vim configuration files for Nix
-      vim-sensible           # Defaults everyone can agree on
-      vim-signify            # Show a diff using Vim its sign column
-      vim-surround           # Quoting/parenthesizing made simple
+      ale                       # Asynchronous Lint Engine
+      awesome-vim-colorschemes
+      fzf-vim                   # A command-line fuzzy finder
+      indentLine                # A vim plugin to display the indention levels with thin vertical lines
+      rainbow_parentheses       # Simpler Rainbow Parentheses
+      semshi                    # Semantic Highlighting for Python in Neovim
+      vim-airline               # lean & mean status/tabline for vim that's light as air
+      vim-better-whitespace     # Better whitespace highlighting for Vim
+      vim-commentary            # Comment stuff out
+      vim-eunuch                # Helpers for UNIX
+      vim-fugitive              # A Git wrapper so awesome, it should be illegal
+      vim-hoogle                # Vim plugin used to query hoogle
+      vim-nix                   # Vim configuration files for Nix
+      vim-sensible              # Defaults everyone can agree on
+      vim-signify               # Show a diff using Vim its sign column
+      vim-surround              # Quoting/parenthesizing made simple
     ];
     extraConfig = ''
       " General settings
+      colors materialbox
       syntax on
       set number relativenumber
       set ff=unix
@@ -136,5 +138,11 @@ in {
       let g:strip_whitespace_on_save = 1
       let g:strip_whitespace_confirm = 0
     '';
+  };
+
+  programs.rofi = {
+    enable = true;
+    theme = "c64";
+    terminal = "$HOME/.local/bin/terminal";
   };
 }
