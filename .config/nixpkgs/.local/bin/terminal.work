@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-/usr/bin/terminator "$@"
+/usr/bin/gnome-terminal "$@"
