@@ -36,6 +36,8 @@
 
   programs.bash = {
     bashrcExtra = ''
+      export GITHUB_HOST=sesol-git002.getingegroup.local
+      export GITHUB_USER=simon.pettersson@getinge.com
       export PATH=$HOME/.local/bin:$PATH
       . $HOME/.nix-profile/etc/profile.d/nix.sh
       . /opt/rh/rh-git29/enable
