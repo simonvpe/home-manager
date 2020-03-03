@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-rofi --show run
+rofi -show run
