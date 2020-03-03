@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+i3-dmenu-desktop --dmenu="dmenu -i -fn '-misc-fixed-medium-r-normal--13-120-75-75-C-70-iso8859-1' -l 20"

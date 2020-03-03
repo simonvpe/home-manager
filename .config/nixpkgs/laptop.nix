@@ -22,8 +22,15 @@
     enable = true;
   };
 
+  programs.rofi = {
+    enable = true;
+    theme = "c64";
+    terminal = "$HOME/.local/bin/terminal";
+  };
+
   home.file.".local/bin/statusbar/battery".source = .local/bin/statusbar/battery;
   home.file.".local/bin/statusbar/wifi".source = .local/bin/statusbar/wifi;
   home.file.".config/i3blocks/config".source = .config/i3blocks/laptop;
   home.file.".local/bin/terminal".source = ./.local/bin/terminal.laptop;
+  home.file.".local/bin/launcer".source = ./.local/bin/launcher.laptop;
 }

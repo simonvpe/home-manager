@@ -159,11 +159,6 @@ in {
     '';
   };
 
-  programs.rofi = {
-    enable = true;
-    theme = "c64";
-    terminal = "$HOME/.local/bin/terminal";
-  };
 
   programs.zathura = {
     enable = true;
