@@ -18,7 +18,7 @@
     '';
   };
 
-  programs.alacritty = {
+  programs.termite = {
     enable = true;
   };
 

@@ -57,10 +57,6 @@ in {
     enable = true;
   };
 
-  programs.termite = {
-    enable = true;
-  };
-
   programs.bash = {
     enable = true;
     initExtra = ''
@@ -103,14 +99,17 @@ in {
     ]);
     withNodeJs = true;
     plugins = with pkgs.vimPlugins; [
-      #ale                       # Asynchronous Lint Engine
+      # Colors
       awesome-vim-colorschemes
+
+      # Coc
       coc-nvim
       coc-json
       coc-prettier
       coc-python
       coc-yaml
 
+      # The rest
       fzf-vim                   # A command-line fuzzy finder
       indentLine                # A vim plugin to display the indention levels with thin vertical lines
       rainbow_parentheses       # Simpler Rainbow Parentheses
