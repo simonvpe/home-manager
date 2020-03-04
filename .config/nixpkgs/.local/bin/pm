@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+sudo podman $1 $([[ "$1" == "run" ]] && {
+    HOME_=/opt/app-root/src
+    printf "%s " "-v$HOME/projects:/guide:ro"
+}) "${@:2}"

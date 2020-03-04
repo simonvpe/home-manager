@@ -49,4 +49,5 @@
  home.file.".config/i3blocks/config".source = ./.config/i3blocks/work;
  home.file.".local/bin/terminal".source = ./.local/bin/terminal.work;
  home.file.".local/bin/launcher".source = ./.local/bin/launcher.work;
+ home.file.".local/bin/pm".source = ./.local/bin/pm;
 }
