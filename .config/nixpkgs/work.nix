@@ -42,6 +42,7 @@
       . $HOME/.nix-profile/etc/profile.d/nix.sh
       . /opt/rh/rh-git29/enable
       . /opt/rh/rh-python36/enable
+      unset LANG # Dunno why this is needed but locale is fucked up without it
     '';
  };
 
