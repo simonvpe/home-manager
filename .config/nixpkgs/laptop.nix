@@ -4,6 +4,7 @@
     buildah            # builds OCI containers
     docker             # runs OCI containers
     docker-compose     # start collections of docker containers
+    git-secret         # allows to encrypt individual files for storage
   ];
 
   programs.git = {
