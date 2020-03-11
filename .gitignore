@@ -3,5 +3,8 @@
 /.config/*
 !/.config/nixpkgs
 !/.gitignore
-!/.gitsecret
 /.config/nixpkgs/machine.nix
+!/.gitsecret
+!/.gitsecret/*
+/.gitsecret/keys/random_seed
+
