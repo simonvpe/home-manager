@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+set -o pipefail -o nounset -o errexit
+
+# set up configuration
+
+readonly config="$HOME/.config/zeke/config"
+
+if ! [[ -d "${config%/*}" ]]; then
+    mkdir -p "${config%/*}"
+fi
+
+if ! [[ -f "${config}" ]]; then
+    cat << EOF > "${config}"
+readonly user=simon.v.pettersson@gmail.com
+readonly notes_dir=$HOME/.zeke/notes
+readonly tmp_dir=/tmp/.zeke
+readonly links_dir=\${tmp_dir}/links
+EOF
+fi
+
+source "${config}"
+
+# create necessary directories
+
+if ! [[ -d "${notes_dir}" ]]; then
+    mkdir -p "${notes_dir}"
+fi
+
+if ! [[ -d "${tmp_dir}" ]]; then
+    mkdir -p "${tmp_dir}"
+fi
+
+if ! [[ -d "${links_dir}" ]]; then
+    mkdir -p "${links_dir}"
+fi
+
+# make sure local cache is up to date
+
+shopt -s nullglob
+for note_file in "${notes_dir}"/*; do
+    md5=$(md5sum "${note_file}" | cut -c 1-32)
+    md5_file="${tmp_dir}/${md5}"
+    link_file="${links_dir}/${note_file##*/}"
+    if ! [[ -f "${md5_file}" ]]; then
+        gpg --decrypt --no-verbose --quiet --no-tty "${note_file}" > "${md5_file}"
+    fi
+    if ! [[ -L "${link_file}" ]] || [[ "$(realpath "${link_file}")" != "${md5_file}" ]]; then
+        ln -sf "${md5_file}" "${link_file}"
+    fi
+done
+
+# interesting stuff
+
+function exit_err() { >&2 echo "$@"; exit 1; }
+function log() { >&2 echo "$@"; }
+
+function new_note() {
+    local -r tmpfile=$(mktemp) && trap "rm '${tmpfile}'" EXIT
+    local -r note="${notes_dir}/$(uuidgen).gpg"
+    "${EDITOR:-vi}" "${tmpfile}"
+    if [[ "$(wc -c "${tmpfile}")" > 0 ]]; then
+        cat "${tmpfile}" | gpg -e -r "${user}" -o "${note}" || exit_err "failed to create note"
+        log created note "${note}"
+    fi
+}
+
+function expand() {
+    # TODO: Circular references will probably cause infinite loop
+    function _find_refs() {
+        rg -oN '![0-9a-z]{8}-([0-9a-z]{4}-){3}[0-9a-z]{12}' "$1" \
+            | cut -c2- | sort -u | xargs -r printf "${links_dir}/%s.gpg\n"
+    }
+    function _expand() {
+        printf '%s\n' "$1"
+        local -r refs=( $(_find_refs "$1") )
+        for ref in $(_find_refs "$1"); do
+            _expand "${ref}"
+        done
+    }
+    while read -r file; do
+        _expand "${file}"
+    done
+}
+
+function extract_tags() {
+    xargs rg --color never -oN "#[0-9a-zA-Z\-_]+" | sort -u
+}
+
+function notes_by_tag() {
+    if [[ $# == 0 ]]; then
+        cat /dev/stdin
+    elif [[ $1 == -* ]]; then
+        xargs rg --color never --files-without-match "#${1:1}" | notes_by_tag ${@:2}
+    else
+        xargs rg --color never --files-with-matches "#$1" | notes_by_tag ${@:2}
+    fi
+}
+
+function display_files() {
+    function _join_by() { local IFS="$1"; shift; echo "$*"; }
+    function _filter() { for x in "$*"; do [[ "$x" == -* ]] || printf "$x"; done; }
+    function _prefix() { for x in "${*:2}"; do printf -- "$1 %s " $x; done; }
+    while read -r file; do
+        local pattern="$(_join_by '|' $(_filter "$*"))"
+        local highlight=$(_prefix '-H' $(rg -n "${pattern}" "${file}" | cut -d':' -f1 | tr '\n' ' ' || true))
+        bat ${highlight} "${file}"
+    done
+}
+
+case $1 in
+    new)
+        new_note
+        ;;
+    tag)
+        find "${links_dir}"/* | notes_by_tag ${@:2} | expand | display_files "${@:2}"
+        ;;
+    tags)
+        find "${links_dir}"/* | extract_tags
+        ;;
+    clear)
+        rm -rf "${tmp_dir}" "${links_dir}"
+        ;;
+    *)
+        exit_err "unknown command '$1'"
+        ;;
+esac

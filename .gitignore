@@ -4,7 +4,3 @@
 !/.config/nixpkgs
 !/.gitignore
 /.config/nixpkgs/machine.nix
-!/.gitsecret
-!/.gitsecret/*
-/.gitsecret/keys/random_seed
-!/journal/*/*/*.secret
