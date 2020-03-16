@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -o nounset -o pipefail -o errexit
+
+readonly notes_dir=~/.zeke/notes
+
+function print-usage() {
+    echo hello
+}
+
+if ! [[ -d "${notes_dir}" ]]; then
+    mkdir -p "${notes_dir}"
+fi
+
+function join {
+    local IFS="$1"; shift; echo "$*"
+}
+
+function expand-refs() {
+    echo "${1}"
+    rg -oNI '![0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}' "$1" \
+        | sed "s#^.#${notes_dir}/#" \
+        | uniq \
+        | while read -r file; do expand-refs "${file}"; done
+}
+
+function expand-many-refs() {
+    while read -r file; do expand-refs "${file}"; done | uniq
+}
+
+function show-tags() {
+    echo show tags "${@}"
+    local -r pattern=$(join '|' ${@})
+    rg -lN "${pattern}" "${notes_dir}" \
+        | expand-many-refs \
+        | xargs bat
+}
+
+function list-tags() {
+    rg -oNI '#[a-zA-Z\-]+' "${notes_dir}" | sort -u
+}
+
+case ${1:-} in
+    new)
+        $EDITOR "${notes_dir}/$(uuidgen)"
+        ;;
+    show-tags)
+        if [[ "$#" -lt 2 ]]; then
+            >&2 print-usage
+            exit 1
+        fi
+        show-tags "${@:2}"
+        ;;
+    list-tags)
+        list-tags
+        ;;
+
+    '')
+        >&2 print-usage
+        exit 1
+esac

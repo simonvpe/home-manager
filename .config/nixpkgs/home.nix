@@ -166,4 +166,6 @@ in {
   programs.zathura = {
     enable = true;
   };
+
+  home.file.".local/bin/zeke".source = ./.local/bin/zeke;
 }
