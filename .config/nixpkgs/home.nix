@@ -16,6 +16,7 @@ in {
      powerline-fonts    # we like fonts
      ripgrep            # like grep, but better
      strace             # trace what applications do
+     sysstat            # sar and more
      tuir               # terminal UI for reddit
      googler            # Googles in the console
      up                 # A tool for writing Linux pipes with instant live preview
@@ -63,6 +64,7 @@ in {
     initExtra = ''
       # use bat as man pager for some colors
       export MANPAGER="sh -c 'col -b | bat -l man -p'"
+      export EDITOR=nvim
     '';
     shellAliases = {
       "cat" = "bat";
@@ -164,4 +166,6 @@ in {
   programs.zathura = {
     enable = true;
   };
+
+  home.file.".local/bin/zeke".source = ./.local/bin/zeke;
 }
