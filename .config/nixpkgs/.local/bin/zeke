@@ -112,7 +112,7 @@ case $1 in
     new)
         new_note
         ;;
-    tag)
+    show)
         find "${links_dir}"/* | notes_by_tag ${@:2} | expand | display_files "${@:2}"
         ;;
     tags)
