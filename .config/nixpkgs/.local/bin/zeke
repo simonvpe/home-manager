@@ -54,15 +54,18 @@ done
 function exit_err() { >&2 echo "$@"; exit 1; }
 function log() { >&2 echo "$@"; }
 
-function new_note() {
+function edit_note() {
     local -r tmpfile=$(mktemp) && trap "rm '${tmpfile}'" EXIT
-    local -r note="${notes_dir}/$(uuidgen | cut -c1-8).gpg"
-    date > "${tmpfile}"
+    local -r note="${notes_dir}/${1}.gpg"
+    cat /dev/stdin > "${tmpfile}"
     "${EDITOR:-vi}" "${tmpfile}"
     if [[ "$(wc -c "${tmpfile}")" > 0 ]]; then
-        cat "${tmpfile}" | gpg -e -r "${user}" -o "${note}" || exit_err "failed to create note"
-        log created note "${note}"
+        cat "${tmpfile}" | gpg -e -r "${user}" -o "${note}" || exit_err "failed to edit note"
     fi
+}
+
+function new_note() {
+    date | edit_note $(uuidgen | cut -c1-8)
 }
 
 function expand() {
@@ -120,6 +123,13 @@ case $1 in
         ;;
     clear)
         rm -rf "${tmp_dir}" "${links_dir}"
+        ;;
+    edit)
+        if [[ -f "${links_dir}/${2}.gpg" ]]; then
+            cat "${links_dir}/${2}.gpg" | edit_note "$2"
+        else
+            exit_err "could not find note '$2'"
+        fi
         ;;
     *)
         exit_err "unknown command '$1'"
