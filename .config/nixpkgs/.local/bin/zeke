@@ -131,6 +131,9 @@ case $1 in
             exit_err "could not find note '$2'"
         fi
         ;;
+    rm)
+        rm -rf "${links_dir}/${2}.gpg" "${notes_dir}/${2}.gpg"
+        ;;
     *)
         exit_err "unknown command '$1'"
         ;;
