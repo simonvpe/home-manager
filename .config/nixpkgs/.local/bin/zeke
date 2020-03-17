@@ -57,6 +57,7 @@ function log() { >&2 echo "$@"; }
 function new_note() {
     local -r tmpfile=$(mktemp) && trap "rm '${tmpfile}'" EXIT
     local -r note="${notes_dir}/$(uuidgen).gpg"
+    date > "${tmpfile}"
     "${EDITOR:-vi}" "${tmpfile}"
     if [[ "$(wc -c "${tmpfile}")" > 0 ]]; then
         cat "${tmpfile}" | gpg -e -r "${user}" -o "${note}" || exit_err "failed to create note"
