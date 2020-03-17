@@ -68,6 +68,19 @@ function new_note() {
     date | edit_note $(uuidgen | cut -c1-8)
 }
 
+function filter_ymd() {
+    while read -r file; do
+        local current="$(date -d "$(head -n1 "${file}")" +%Y-%m-%d)"
+        if [[ "$1" == "${current}" ]]; then
+            printf '%s\n' "${file}"
+        fi
+    done
+}
+
+function filter_date() {
+    filter_ymd $(date --date "$1" +%Y-%m-%d)
+}
+
 function expand() {
     # TODO: Circular references will probably cause infinite loop
     function _find_refs() {
@@ -133,6 +146,9 @@ case $1 in
         ;;
     rm)
         rm -rf "${links_dir}/${2}.gpg" "${notes_dir}/${2}.gpg"
+        ;;
+    date)
+        find "${links_dir}"/* | filter_date "${*:2}" | expand | display_files
         ;;
     *)
         exit_err "unknown command '$1'"
