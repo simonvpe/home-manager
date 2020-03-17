@@ -83,7 +83,7 @@ function expand() {
 }
 
 function extract_tags() {
-    xargs rg --color never -oN "#[0-9a-zA-Z\-_]+" | sort -u
+    xargs rg --color never -oNI "#[0-9a-zA-Z\-_]+" | sort -u
 }
 
 function notes_by_tag() {
