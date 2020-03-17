@@ -56,7 +56,7 @@ function log() { >&2 echo "$@"; }
 
 function new_note() {
     local -r tmpfile=$(mktemp) && trap "rm '${tmpfile}'" EXIT
-    local -r note="${notes_dir}/$(uuidgen).gpg"
+    local -r note="${notes_dir}/$(uuidgen | cut -c1-8).gpg"
     date > "${tmpfile}"
     "${EDITOR:-vi}" "${tmpfile}"
     if [[ "$(wc -c "${tmpfile}")" > 0 ]]; then
@@ -68,7 +68,7 @@ function new_note() {
 function expand() {
     # TODO: Circular references will probably cause infinite loop
     function _find_refs() {
-        rg -oN '![0-9a-z]{8}-([0-9a-z]{4}-){3}[0-9a-z]{12}' "$1" \
+        rg -oN '![0-9a-z]{8}!' "$1" \
             | cut -c2- | sort -u | xargs -r printf "${links_dir}/%s.gpg\n"
     }
     function _expand() {
