@@ -81,15 +81,18 @@ function filter_date() {
     filter_ymd $(date --date "$1" +%Y-%m-%d)
 }
 
+declare -A expand_cache
 function expand() {
     # TODO: Circular references will probably cause infinite loop
     function _find_refs() {
         rg -oN '![0-9a-z]{8}!' "$1" \
-            | cut -c2- | sort -u | xargs -r printf "${links_dir}/%s.gpg\n"
+            | cut -c2-9 | sort -u | xargs -r printf "${links_dir}/%s.gpg\n"
     }
     function _expand() {
-        printf '%s\n' "$1"
-        local -r refs=( $(_find_refs "$1") )
+        if ! [[ -n "${expand_cache[$1]:-}" ]]; then
+            printf '%s\n' "$1"
+            expand_cache[$1]=used
+        fi
         for ref in $(_find_refs "$1"); do
             _expand "${ref}"
         done
@@ -149,6 +152,9 @@ case $1 in
         ;;
     date)
         find "${links_dir}"/* | filter_date "${*:2}" | expand | display_files
+        ;;
+    expand)
+        echo "${links_dir}/${2}.gpg" | expand | display_files
         ;;
     *)
         exit_err "unknown command '$1'"
