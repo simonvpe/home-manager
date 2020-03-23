@@ -50,4 +50,6 @@
  home.file.".local/bin/terminal".source = ./.local/bin/terminal.work;
  home.file.".local/bin/launcher".source = ./.local/bin/launcher.work;
  home.file.".local/bin/pm".source = ./.local/bin/pm;
+ home.file.".local/bin/hometunnel".source = ./.local/bin/hometunnel.work;
+ home.file.".ssh/config".source = ./.ssh/config.work;
 }
