@@ -13,7 +13,7 @@ case "${1}" in
         ;;
     inner)
         i3-msg fullscreen &>/dev/null
-        #sleep 0.5
+        sleep 0.1
         cmatrix -C green &
         xtrlock-pam -b none
         pkill -f locksaver
