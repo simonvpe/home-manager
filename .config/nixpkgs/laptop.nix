@@ -35,4 +35,6 @@
   home.file.".config/i3blocks/config".source = .config/i3blocks/laptop;
   home.file.".local/bin/terminal".source = ./.local/bin/terminal.laptop;
   home.file.".local/bin/launcher".source = ./.local/bin/launcher.laptop;
+  home.file.".local/bin/workproxy".source = ./.local/bin/workproxy.laptop;
+  home.file.".ssh/config".source = ./.ssh/config.laptop;
 }
