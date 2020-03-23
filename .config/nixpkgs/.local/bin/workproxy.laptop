@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+readonly process_name=workproxyprocess
+
+if [[  $1 == start ]]; then
+    exec -a  ${process_name} ssh workproxy
+elif [[ $1 == stop ]]; then
+    pkill -f ${process_name}
+else
+    >&2 echo "Usage: $0 start|stop"
+fi
