@@ -9,6 +9,8 @@ in {
 
   home.packages = with pkgs; [
      i3blocks           # status bar for i3
+     xtrlock-pam        # a simple lock screen
+     cmatrix            # matrix stuff for thelock screen
      iftop              # shows active network connections
      jq                 # like sed for json
      linuxPackages.perf # performance monitor applications
@@ -43,9 +45,9 @@ in {
     # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       bitwarden
-      octotree
       privacy-badger
       vim-vixen
+      adsum-notabs
     ];
   };
 
@@ -168,4 +170,5 @@ in {
   };
 
   home.file.".local/bin/zeke".source = ./.local/bin/zeke;
+  home.file.".local/bin/lock".source = ./.local/bin/lock;
 }

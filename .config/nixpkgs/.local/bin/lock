@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+case "${1:-outer}" in
+    outer)
+        exec -a lock alacritty -e bash -c "'$(readlink -f $0)' inner"
+        ;;
+    inner)
+        i3-msg fullscreen &>/dev/null
+        sleep 0.1
+        cmatrix -C green &
+        xtrlock-pam -b none
+        pkill -f lock
+        i3-msg fullscreen
+        i3-msg restart
+        ;;
+    *)
+        2>&1 echo "Usage: $0"
+        ;;
+esac
