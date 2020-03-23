@@ -11,6 +11,7 @@ in {
      i3blocks           # status bar for i3
      xtrlock-pam        # a simple lock screen
      cmatrix            # matrix stuff for thelock screen
+     xautolock          # automatic lock screen
      iftop              # shows active network connections
      jq                 # like sed for json
      linuxPackages.perf # performance monitor applications
