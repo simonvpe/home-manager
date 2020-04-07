@@ -86,6 +86,16 @@ in {
     enable = true;
     enableZshIntegration = false;
     enableFishIntegration = false;
+    settings = {
+      prompt_order = [
+        "username"
+        "directory"
+        "git_branch"
+        "kubernetes"
+        "nodejs"
+        "python"
+      ];
+    };
   };
 
   # bat, a cat clone with wings
@@ -108,14 +118,8 @@ in {
       # Colors
       awesome-vim-colorschemes
 
-      # Coc
-      coc-nvim
-      coc-json
-      coc-prettier
-      coc-python
-      coc-yaml
-
       # The rest
+      ale
       fzf-vim                   # A command-line fuzzy finder
       indentLine                # A vim plugin to display the indention levels with thin vertical lines
       rainbow_parentheses       # Simpler Rainbow Parentheses
