@@ -23,6 +23,7 @@ in {
      tuir               # terminal UI for reddit
      googler            # Googles in the console
      up                 # A tool for writing Linux pipes with instant live preview
+     alacritty          # Needed for the screensaver
      (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 

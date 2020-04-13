@@ -1,0 +1,8 @@
+# https://github.com/LukeSmithxyz/voidrice
+separator_block_width=15
+markup=pango
+
+[date]
+command=date
+interval=1
+
