@@ -8,10 +8,10 @@ in {
   imports = [ ./machine.nix ];
 
   home.packages = with pkgs; [
-     i3blocks           # status bar for i3
-     xtrlock-pam        # a simple lock screen
+     alacritty          # Needed for the screensaver
      cmatrix            # matrix stuff for thelock screen
-     xautolock          # automatic lock screen
+     googler            # Googles in the console
+     i3blocks           # status bar for i3
      iftop              # shows active network connections
      jq                 # like sed for json
      linuxPackages.perf # performance monitor applications
@@ -21,9 +21,9 @@ in {
      strace             # trace what applications do
      sysstat            # sar and more
      tuir               # terminal UI for reddit
-     googler            # Googles in the console
      up                 # A tool for writing Linux pipes with instant live preview
-     alacritty          # Needed for the screensaver
+     xautolock          # automatic lock screen
+     xtrlock-pam        # a simple lock screen
      (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 
