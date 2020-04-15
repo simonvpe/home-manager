@@ -30,8 +30,8 @@ floating_modifier $mod
 bindsym $mod+Return exec $HOME/.local/bin/terminal
 
 # lock the screen
-exec --no-startup-id ~/.local/bin/lock server
-bindsym $mod+L exec --no-startup-id ~/.local/bin/lock now
+#exec --no-startup-id ~/.local/bin/lock server
+#bindsym $mod+L exec --no-startup-id ~/.local/bin/lock now
 
 # kill focused window
 bindsym $mod+Shift+apostrophe kill

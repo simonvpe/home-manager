@@ -18,8 +18,10 @@ in {
      nload              # show network transfer load
      powerline-fonts    # we like fonts
      ripgrep            # like grep, but better
+     spotify            # music!
      strace             # trace what applications do
      sysstat            # sar and more
+     tree               # a nice util to show file trees
      tuir               # terminal UI for reddit
      up                 # A tool for writing Linux pipes with instant live preview
      xautolock          # automatic lock screen
