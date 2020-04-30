@@ -25,6 +25,7 @@ in {
      tuir               # terminal UI for reddit
      up                 # A tool for writing Linux pipes with instant live preview
      xautolock          # automatic lock screen
+     xorg.xkbcomp       # needed for custom keyboard maps
      xtrlock-pam        # a simple lock screen
      (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
@@ -179,4 +180,7 @@ in {
 
   home.file.".local/bin/zeke".source = ./.local/bin/zeke;
   home.file.".local/bin/lock".source = ./.local/bin/lock;
+  home.file.".local/bin/keyboard".source = ./.local/bin/keyboard;
+  home.file.".xkb/symbols/svorak".source = ./.xkb/symbols/svorak;
+  home.file.".xkb/symbols/evorak".source = ./.xkb/symbols/evorak;
 }

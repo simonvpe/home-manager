@@ -18,6 +18,9 @@ font pango:monospace 12
 # Detect where I am and adjust displays
 exec --no-startup-id autorandr --change
 
+# Configure the default keyboard
+exec --no-startup-id ~/.local/bin/keyboard
+
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
@@ -83,8 +86,8 @@ bindsym $mod+period layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+# cycle keyboard
+bindsym $mod+space exec --no-startup-id ~/.local/bin/keyboard
 
 # focus the parent container
 bindsym $mod+a focus parent
