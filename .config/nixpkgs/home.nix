@@ -46,7 +46,6 @@ in {
 
   programs.firefox = {
     enable = true;
-    enableIcedTea = true;
     # https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/addons.json
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
       bitwarden
