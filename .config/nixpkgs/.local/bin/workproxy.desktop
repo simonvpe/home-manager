@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 readonly process_name=workproxyprocess
+readonly workproxy='ssh -f workproxy sleep infinity'
+readonly worksocks='ssh -f worksocks sleep infinity'
 
 if [[  $1 == start ]]; then
-    exec -a  ${process_name} ssh -f workproxy sleep infinity
+    exec -a ${process_name} bash -c "${workproxy} && ${worksocks}"
 elif [[ $1 == stop ]]; then
     pkill -f ${process_name}
 else
