@@ -4,10 +4,9 @@
 if [[  $1 == start ]]; then
     exec bash $0 none
 elif [[ $1 == stop ]]; then
-    pkill -f 'sleep infinity'
+    pkill -f 'vagrant ssh -- -D 30000'
 elif [[ $1 == none ]]; then
-    ssh -f workproxy sleep infinity
-    ssh -f worksocks sleep infinity
+    cd /home/starlord/projects/rco/vpn && vagrant ssh -- -D 30000 sleep infinity
 else
     >&2 echo "Usage: $0 start|stop"
 fi

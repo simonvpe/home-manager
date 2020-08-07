@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 let machine = import ./machine.nix;
-    all-hies = import (fetchTarball "https://github.com/infinisil/all-hies/tarball/master") {};
 in {
   home.stateVersion = "20.03";
 
@@ -27,7 +26,6 @@ in {
      xautolock          # automatic lock screen
      xorg.xkbcomp       # needed for custom keyboard maps
      xtrlock-pam        # a simple lock screen
-     (all-hies.selection { selector = p: { inherit(p) ghc865; }; })
   ];
 
   xsession = {
@@ -71,6 +69,7 @@ in {
       # use bat as man pager for some colors
       export MANPAGER="sh -c 'col -b | bat -l man -p'"
       export EDITOR=nvim
+      export NIX_PATH="~/.nix-defexpr/unmanaged:$NIX_PATH"
     '';
     shellAliases = {
       "cat" = "bat";
