@@ -9,6 +9,7 @@ in {
   home.packages = with pkgs; [
      alacritty          # Needed for the screensaver
      cmatrix            # matrix stuff for thelock screen
+     direnv
      googler            # Googles in the console
      i3blocks           # status bar for i3
      iftop              # shows active network connections
@@ -69,7 +70,8 @@ in {
       # use bat as man pager for some colors
       export MANPAGER="sh -c 'col -b | bat -l man -p'"
       export EDITOR=nvim
-      export NIX_PATH="~/.nix-defexpr/unmanaged:$NIX_PATH"
+      export NIX_PATH="$HOME/.nix-defexpr/unmanaged:$NIX_PATH"
+      $(direnv hook bash)
     '';
     shellAliases = {
       "cat" = "bat";
