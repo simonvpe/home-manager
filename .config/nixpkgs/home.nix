@@ -71,7 +71,7 @@ in {
       export MANPAGER="sh -c 'col -b | bat -l man -p'"
       export EDITOR=nvim
       export NIX_PATH="$HOME/.nix-defexpr/unmanaged:$NIX_PATH"
-      $(direnv hook bash)
+      eval "$(direnv hook bash)"
     '';
     shellAliases = {
       "cat" = "bat";
